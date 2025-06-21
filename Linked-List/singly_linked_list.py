@@ -35,120 +35,141 @@
 ###########################################################################################
 
 class Node:
-    def __init__(self, item=None, next=None):
-        self.item=item
-        self.next=next
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
 
 class SinglyLinkedList:
-    def __init__(self, start=None):
-        self.start=start
-
+    def __init__(self, head=None):
+        #this stores the reference to the first node
+        self.head = head
+    
     def is_empty(self):
-        return self.start == None
+        if self.head is None:
+            return True
+        return False
 
-    def insert_at_start(self, data):
-        n = Node(data, self.start)
-        #pass the value of n in start if you are inserting from start
-        self.start = n
-
-    def insert_at_last(self, data):
-        n = Node(data)# here i have not passed any argument that means none will be passed
+    def insert_at_start(self,val):
+        #Store the value inside a new node temp
+        temp = Node(val, self.head)
+        #Reference the new node temp with head 
+        self.head = temp
+  
+    def insert_at_last(self, val):
+        n = Node(val, next=None)
         if not self.is_empty():
-            temp = self.start
+            temp = self.head
             while temp.next is not None:
                 temp = temp.next
             temp.next = n
         else:
-            self.start=n
+            self.head = n
 
-    def search(self, data):
-        temp = self.start
-        while temp is not None:
-            if temp.item == data:
-                return temp
-            temp = temp.next
-        return None
-
-    def insert_after(self, temp, data): #using temp I am passing the reference of the node after which I have to insert the data
-        #first search the node after which you have to insert the new value using the search method
+    def search(self, val):
+        if not self.is_empty():
+            temp = self.head
+            while temp is not None:
+                if temp.data == val:
+                    return temp
+                temp = temp.next
+            return "Data not found"
+        else:
+            return "Linked List is empty"
+    
+    def insert_after(self, val, x):
+        temp = self.head
         if temp is not None:
-            n=Node(data, temp.next)
-            temp.next = n
-
-    def print_list(self):
-        temp = self.start
-        while temp is not None:
-            print(temp.item, end = ' ')
-            temp = temp.next
-
+            while temp is not None:
+                if temp.data == x:
+                    n = Node(val, next=temp.next)
+                    temp.next = n
+                    return "Node inserted successfully"
+                temp = temp.next
+        else:
+            return "Node not found"
+    
     def delete_first(self):
-        if self.start is not None:
-            self.start = self.start.next
+        if self.head is not None:
+            self.head = self.head.next
 
     def delete_last(self):
-        if self.start is None:
+        if self.head is None:
             pass
-        elif self.start.next is None:
-            self.start = None
+        elif self.head.next is None:
+            self.head = None
         else:
-            temp = self.start
+            temp = self.head
             while temp.next.next is not None:
                 temp = temp.next
-            temp.next=None
-
-    def delete_item(self, data):
-        if self.start is None:
+                break
+            temp.next = None
+    
+    def delete_item(self, val):
+        if self.head is None:
             pass
-        elif self.start.next is None:
-            if self.start.item == data:
-                self.start = None
+        elif self.head.next is None:
+            if self.head.data == val:
+                self.head = None
         else:
-            temp = self.start
-            if temp.item == data:
-                self.start = temp.next
+            temp = self.head
+            if temp.data == val:
+                self.head = temp.next
             else:
                 while temp.next is not None:
-                    if temp.next.item == data:
-                        temp.next=temp.next.next
+                    if temp.next.data == val:
+                        temp.next = temp.next.next
                         break
                     temp = temp.next
-
-
+    # making linked list iterable
     def __iter__(self):
-        return sll_iterator(self.start)
+        return Iterator(self.head)
 
 
-#Driver code
-mylist = SinglyLinkedList()
+    def print_list(self):
+        temp = self.head
+        while temp is not None:
+            print(temp.data, end=' ')
+            temp = temp.next
 
-mylist.insert_at_start(14)
-mylist.insert_at_last(20)
-mylist.insert_at_start(4)
-mylist.insert_after(mylist.search(14), 144)
-mylist.print_list()
-
-print()
-mylist.delete_item(144)
-mylist.print_list()
-print()
-
-
-###iterating through the ll
-class sll_iterator:
-    def __init__(self,start):
-        self.current = start
+#Making linked list object iterable
+class Iterator:
+    def __init__(self, current):
+        self.current = current
+    
     def __iter__(self):
         return self
+    
     def __next__(self):
         if not self.current:
             raise StopIteration
-        data = self.current.item
+        data = self.current.data
         self.current = self.current.next
         return data
 
 
+list1 = SinglyLinkedList()
+list1.insert_at_start(10)
+list1.insert_at_start(20)
+list1.insert_at_last(30)
+list1.insert_after(5,20)
+list1.print_list()
+print()
+print('after delete first')
+list1.delete_first()
+list1.print_list()
+print()
+print('delete item')
+list1.delete_item(5)
+list1.print_list()
+print()
+print('after delete last')
+list1.delete_last()
+list1.print_list()
 
-for x in mylist:
-    print(x, end=' ')
+print()
+print('sabse niche')
+for i in list1:
+    print(i, end = ' ')
+
 
 
