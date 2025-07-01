@@ -1,3 +1,10 @@
+# space complexity --> push n elements - O(n)
+# time complexity --> push - O(1)
+#                     pop - O(1)
+#                     size - O(1)
+#                     isEmpty - O(1)
+#                     isFull - O(1)
+#                     deleteStack - O(1)
 class Stack:
     def __init__(self):
         self.list = []
@@ -23,6 +30,10 @@ class Stack:
 
     def size(self):
         return len(self.list)
+    
+    def deleteStack(self):
+        if not self.isEmpty():
+            return self.list.clear()
 
 s1 = Stack()
 s1.push(1)
