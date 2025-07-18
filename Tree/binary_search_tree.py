@@ -65,7 +65,7 @@ class BST:
             self.rpostorder(root.right, result)
             result.append(root.val)
     
-    def min_value(self, root):
+    def min_value(self, temp):
         current = temp
         while current.left is not None:
             current = current.left
@@ -78,9 +78,9 @@ class BST:
         return current.val
 
     def delete(self, data):
-        self.root = rdelete(self.root, data)
+        self.root = self.rdelete(self.root, data)
 
-    def rdelete(self, root, data)
+    def rdelete(self, root, data):
         if root is None:
             return root
         if data < root.val:
@@ -92,8 +92,10 @@ class BST:
                 return root.right
             elif root.right is None:
                 return root.left
+
+            #replacing with successor
             root.val = self.min_value(root.right)
-            self.rdelete(root.right, root.val)
+            root.right = self.rdelete(root.right, root.val)
         return root
     
     def size(self):
@@ -107,5 +109,8 @@ t1.insert(30)
 t1.insert(40)
 t1.insert(50)
 t1.insert(60)
+t1.insert(45)
 t1.insert(70)
-print(t1.postorder_search())
+t1.delete(50)
+t1.delete(40)
+print(t1.inorder_search())
