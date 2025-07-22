@@ -1,12 +1,12 @@
-def selection_sort(arr):
-    for i in range(len(arr)-1):
-        min_index = i
-        
-        for j in range(i+1, len(arr)):
-            if arr[j] < arr[min_index]:
-                min_index = j
-        arr[i], arr[min_index] = arr[min_index], arr[i]
-    return arr
+def selection_sort(a):
+    
+    for i in range(len(a)-1, 0, -1):
+        largest = 0
+        for j in range(1,i+1):
+            if a[j] > a[largest]:
+                largest = j
+        a[largest], a[j] = a[j], a[largest]
+a = [4,5,10,43,57,91,45,9,7]
+selection_sort(a)
+print(a)
 
-arr = [7,4,10,8,3,1]
-print(selection_sort(arr))
