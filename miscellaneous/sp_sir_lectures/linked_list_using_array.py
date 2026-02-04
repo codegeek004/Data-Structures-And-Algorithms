@@ -8,24 +8,33 @@ class LinkedList:
     def insert(self, val, pos=-1):
         last_idx = len(self.arr)
         new_node = [val, self.next]
-        self.arr.insert(pos, new_node)
+        # self.arr.insert(pos, new_node)
         # self.head = x
         if pos == -1:
             pos = last_idx
+            self.arr.append(new_node)
             # self.arr[pos][1] = None
 
             if len(self.arr) <= 1:
-                self.arr[pos-1][1] = None
+                self.head = id(new_node)
+                self.arr[0][1] = None
             else:
                 print('else mai gaya')
                 self.arr[pos-1][1] = id(new_node)
 
         elif pos == 0:
             # self.next = id(self.arr[0])
-            self.arr[pos][1] = id(self.arr[1])
+            self.arr.insert(0, new_node)
+            self.head = id(self.arr[0])
+            if len(self.arr) > 1:
+                self.arr[0][1] = id(self.arr[1])
         else:
             # self.next = id(self.arr[pos])
-            self.arr[pos][1] = id(self.arr[pos+1])
+            self.arr.insert(pos, new_node)
+            if pos > 0:
+                self.arr[pos-1][1] = id(self.arr[pos])
+            if pos < len(self.arr)-1:
+                self.arr[pos][1] = id(self.arr[pos+1])
 
     def remove(self, pos):
         self.arr.pop(0)
