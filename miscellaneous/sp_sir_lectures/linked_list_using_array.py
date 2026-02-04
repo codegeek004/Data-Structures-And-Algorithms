@@ -16,16 +16,15 @@ class LinkedList:
             # self.arr[pos][1] = None
 
             if len(self.arr) <= 1:
-                self.head = id(new_node)
+                self.head = new_node
                 self.arr[0][1] = None
             else:
-                print('else mai gaya')
                 self.arr[pos-1][1] = id(new_node)
 
         elif pos == 0:
             # self.next = id(self.arr[0])
             self.arr.insert(0, new_node)
-            self.head = id(self.arr[0])
+            self.head = self.arr[0]
             if len(self.arr) > 1:
                 self.arr[0][1] = id(self.arr[1])
         else:
@@ -36,11 +35,21 @@ class LinkedList:
             if pos < len(self.arr)-1:
                 self.arr[pos][1] = id(self.arr[pos+1])
 
-    def remove(self, pos):
-        self.arr.pop(0)
+    def delete(self, pos=-1):
+        last_idx = len(self.arr)-1
+        if pos == -1 or len(self.arr) == 1 or pos == last_idx:
+            self.arr[last_idx-1][1] = None
+            self.arr.pop(last_idx)
+        elif pos == 0:
+            self.head = self.arr[1]
+            self.arr.pop(0)
+        else:
+            if pos > last_idx:
+                return f"WARNING : {pos} is greater than length of the array: {last_idx+1}. Delete Operation Failed"
 
-    # def print_list(self):
-    #     while self.arr.nexr
+            if pos >= 1:
+                self.arr[pos-1][1] = id(self.arr[pos+1][1])
+                self.arr.pop(pos)
 
 
 list1 = LinkedList()
@@ -50,4 +59,11 @@ list1.insert(2)
 list1.insert(3, 0)
 list1.insert(4, 1)
 list1.insert('yash', 2)
+print(list1.head)
+print(list1.arr)
+list1.delete()
+list1.delete(0)
+list1.delete(1)
+list1.delete(2)
+print(list1.delete(100))
 print(list1.arr)
