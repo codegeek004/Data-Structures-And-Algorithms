@@ -35,6 +35,8 @@ class LinkedList:
             if pos < len(self.arr)-1:
                 self.arr[pos][1] = id(self.arr[pos+1])
 
+        return f"Successfully added item at {pos} position"
+
     def delete(self, pos=-1):
         last_idx = len(self.arr)-1
         if pos == -1 or len(self.arr) == 1 or pos == last_idx:
@@ -50,20 +52,38 @@ class LinkedList:
             if pos >= 1:
                 self.arr[pos-1][1] = id(self.arr[pos+1][1])
                 self.arr.pop(pos)
+        return f"Deleted item at {pos} position"
+
+    def update(self, pos, val):
+        last_idx = len(self.arr)-1
+        if pos > last_idx:
+            return f"WARNING : {pos} is greater than length of the array: {last_idx+1}. Update Operation Failed"
+
+        if pos == -1:
+            self.arr[-1][0] = val
+        elif pos == 0:
+            self.arr[0][0] = val
+        else:
+            self.arr[pos][0] = val
+
+        return f"Updated item at {pos} position"
 
 
 list1 = LinkedList()
 
-list1.insert(1)
-list1.insert(2)
-list1.insert(3, 0)
-list1.insert(4, 1)
-list1.insert('yash', 2)
+print(list1.insert(1))
+print(list1.insert(2))
+print(list1.insert(3, 0))
+print(list1.insert(4, 1))
+print(list1.insert('yash', 2))
+print(list1.update(3, 'pulkit'))
 print(list1.head)
 print(list1.arr)
-list1.delete()
-list1.delete(0)
-list1.delete(1)
-list1.delete(2)
+print(list1.delete())
+print(list1.delete(0))
+print(list1.delete(1))
+print(list1.delete(2))
 print(list1.delete(100))
+print(list1.arr)
+print(list1.update(-1, 'yash'))
 print(list1.arr)
